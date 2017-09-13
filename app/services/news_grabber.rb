@@ -1,11 +1,21 @@
 class NewsGrabber
-  YANDEX_NEWS_URL = 'https://news.yandex.ru/index5.utf8.js'.freeze
+  # frozen_string_literal: true
+  
+  YANDEX_NEWS_URL = 'https://news.yandex.ru/index5.utf8.js'
+  YANDEX_NEWS_KEY = 'from_yandex'
+  ADMIN_NEWS_KEY = 'from_admin'
 
-  def self.perform_request
-    news = Typhoeus.get(YANDEX_NEWS_URL).body.force_encoding('utf-8')
-    main_record = JSON.parse(news.scan(/var m_index = (.+); var/).flatten.first).first
-    New.create!(title: main_record['title'],
-                date: DateTime.parse("#{main_record['date']} #{main_record['time']}").to_s(:db),
-                text: main_record['descr'])
+  def perform_request
+    return unless redis.hgetall(ADMIN_NEWS_KEY).empty?
+    news_info = JSON.parse(Typhoeus.get(YANDEX_NEWS_URL).body.force_encoding('utf-8')
+                                   .scan(/var m_index = (.+); var/).flatten.first)
+                                   .first.to_a.flatten
+    redis.hmset(YANDEX_NEWS_KEY, news_info)
+  end
+
+  private
+
+  def redis
+    @redis ||= Redis.current
   end
 end
