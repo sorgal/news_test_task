@@ -1,16 +1,12 @@
-- if @news_record.empty?
+#news style="#{news_style}"
   p
-    span.h4
-      = t('.no_news')
-- else
-  p
-    span.h4
+    span.h4#news_title
       = @news_record['title']
   p
     span
       = t('.published_at')
-    span
+    span#news_published_at
       = "#{@news_record['date']} #{@news_record['time']}"
   p
-    span
-      = @news_record['descr'].html_safe
+    span#news_description
+      = @news_record['descr'].try(:html_safe)

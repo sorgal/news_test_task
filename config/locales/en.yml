@@ -35,7 +35,6 @@ en:
   home:
     index:
       published_at: 'Publication date: '
-      no_news: 'No news here'
   admin:
     index:
       title: 'Title'

@@ -1,9 +1,7 @@
 class HomeController < ApplicationController
 
   def index
-    redis = Redis.current
-    @news_record = redis.hgetall(NewsProcessor::ADMIN_NEWS_KEY)
-    @news_record = redis.hgetall(NewsProcessor::YANDEX_NEWS_KEY) if @news_record.empty?
+    @news_record = News::Output.new().output_news_record
   end
 
 end
