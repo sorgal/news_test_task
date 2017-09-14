@@ -1,0 +1,5 @@
+= simple_form_for 'news_record', url: admin_index_path do |f|
+  = f.input :title, label: t('.title')
+  = f.input :descr, as: :text, label: t('.description')
+  = f.input :expiration_date, as: :datetime, label: t('.expires_at'), html5: true
+  = f.button :submit

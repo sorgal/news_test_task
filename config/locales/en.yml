@@ -31,3 +31,16 @@
 
 en:
   hello: "Hello world"
+  admin_link: 'Admin'
+  home:
+    index:
+      published_at: 'Publication date: '
+      no_news: 'No news here'
+  admin:
+    index:
+      title: 'Title'
+      description: 'Description'
+      expires_at: 'Expires at'
+    create:
+      saved: 'News record successfully created'
+      error: 'Error during news record creation'

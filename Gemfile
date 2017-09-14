@@ -55,3 +55,8 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'typhoeus'
 gem 'whenever', :require => false
+gem 'slim-rails'
+gem 'jquery-rails'
+gem 'twitter-bootstrap-rails'
+gem 'simple_form'
+gem 'rollbar'
