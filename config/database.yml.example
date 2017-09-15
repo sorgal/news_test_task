@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("DEVELOPMENT_DBNAME") { 'news_test_task_dev' } %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("TEST_DBNAME") { 'news_test_task_dev' } %>

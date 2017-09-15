@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe News::Output  do
   let(:redis) { Redis.current }
-  let(:yandex_data) { { 'title' => 'Test title yandex', 'descr' => 'Test descr yandex' } }
-  let(:data) { { 'title' => 'Test title', 'descr' => 'Test descr' } }
+  let(:yandex_data) { { title: 'Test title yandex', descr: 'Test descr yandex' } }
+  let(:data) { { title: 'Test title', descr: 'Test descr' } }
 
   before(:each) do
     clean
-    redis.hmset(NewsRoot::YANDEX_NEWS_KEY, yandex_data.to_a.flatten)
+    redis.hmset(NewsBase::YANDEX_NEWS_KEY, yandex_data.to_a.flatten)
   end
 
   after(:each) do
@@ -16,16 +16,12 @@ RSpec.describe News::Output  do
 
   context 'news record fetch' do
     it 'checks yandex news record fetch works correctly' do
-      expect(News::Output.new().output_news_record).to eq(yandex_data)
-      # expect(record['title']).to eq(yandex_response[:title])
-      # expect(record['descr']).to eq(yandex_response[:descr])
+      check_response(yandex_data)
     end
 
     it 'checks admin news record fetch works correctly' do
-      redis.hmset(NewsRoot::ADMIN_NEWS_KEY, data.to_a.flatten)
-      expect(News::Output.new().output_news_record).to eq(data)
-      # expect(record['title']).to eq(yandex_response[:title])
-      # expect(record['descr']).to eq(yandex_response[:descr])
+      redis.hmset(NewsBase::ADMIN_NEWS_KEY, data.to_a.flatten)
+      check_response(data)
     end
   end
 

@@ -1,12 +1,12 @@
+# frozen_string_literal: true
+
 class AdminController < ApplicationController
 
   def create
-    expires_at = params[:news_record][:expiration_date]
-    News::Admin.new().save_admin_news_record(news_record_params, expires_at)
+    News::Admin.new().save_admin_news_record(news_record_params)
     flash[:notice] = t('.saved')
   rescue
     flash[:error] = t('.error')
-    p $!
     Rollbar.error($!)
   ensure
     redirect_to home_index_path
@@ -15,7 +15,7 @@ class AdminController < ApplicationController
   private
 
   def news_record_params
-    params.require(:news_record).permit(:title, :descr)
+    params.require(:news_record).permit(:title, :descr, :expiration_date)
   end
 
 end
